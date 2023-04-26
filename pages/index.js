@@ -4,7 +4,6 @@ import { createHttpLink } from '@apollo/client/link/http';
 import { setContext } from '@apollo/client/link/context';
 import Head from 'next/head';
 import Sidebar from '../components/Sidebar';
-import '../styles/globals.css';
 
 const httpLink = createHttpLink({
   uri: 'https://main--arif-yildirims-team-oieo5.apollographos.net/graphql',
