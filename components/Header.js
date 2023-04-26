@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import Head from 'next/head';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCoffee } from '@fortawesome/free-solid-svg-icons';
+
 
 const Header = () => {
   useEffect(() => {
@@ -24,7 +23,6 @@ const Header = () => {
       </Head>
       <div className="header">
         <h1>Next.js Header</h1>
-        <FontAwesomeIcon icon={faCoffee} />
       </div>
     </>
   );
