@@ -3,6 +3,7 @@ import { ApolloClient, InMemoryCache, gql } from '@apollo/client';
 import { createHttpLink } from '@apollo/client/link/http';
 import { setContext } from '@apollo/client/link/context';
 import Head from 'next/head';
+import Header from '../components/Header';
 import Sidebar from '../components/Sidebar';
 
 const httpLink = createHttpLink({
@@ -27,7 +28,6 @@ const client = new ApolloClient({
 const HOMEPAGE_QUERY = gql`
   query {
     Homepage {
-      _id
       news_img
       agents_img
       battlepass_img
@@ -77,9 +77,7 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>Valorant Game</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link rel="stylesheet" href="/styles.css" />
+        <Header />
       </Head>
       <div className="main-container">
         <Sidebar />
