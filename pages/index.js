@@ -3,6 +3,7 @@ import { ApolloClient, InMemoryCache, gql } from '@apollo/client';
 import { createHttpLink } from '@apollo/client/link/http';
 import { setContext } from '@apollo/client/link/context';
 import Head from 'next/head';
+import Sidebar from '../components/Sidebar';
 import '../styles/globals.css';
 
 const httpLink = createHttpLink({
@@ -82,7 +83,7 @@ export default function Home() {
         <link rel="stylesheet" href="/styles.css" />
       </Head>
       <div className="main-container">
-        {/* ... */}
+        <Sidebar />
         <div className="card-container">
           {cards.map((card, index) => (
             <div key={index} className="card">
