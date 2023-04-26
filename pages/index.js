@@ -1,6 +1,9 @@
+import { useEffect, useState } from 'react';
 import { ApolloClient, InMemoryCache, gql } from '@apollo/client';
 import { createHttpLink } from '@apollo/client/link/http';
 import { setContext } from '@apollo/client/link/context';
+import Head from 'next/head';
+import '../styles/globals.css';
 
 const httpLink = createHttpLink({
   uri: 'https://main--arif-yildirims-team-oieo5.apollographos.net/graphql',
@@ -38,52 +41,57 @@ const HOMEPAGE_QUERY = gql`
   }
 `;
 
-export async function getStaticProps() {
-  const { data } = await client.query({ query: HOMEPAGE_QUERY });
-  const homepage = data.Homepage;
+export default function Home() {
+  const [cards, setCards] = useState([]);
 
-  return {
-    props: {
-      homepage,
-    },
-  };
-}
+  useEffect(() => {
+    (async () => {
+      const { data } = await client.query({ query: HOMEPAGE_QUERY });
+      const homepage = data.Homepage;
+      const titles = [
+        'Haberler',
+        'Ajanlar',
+        'Savaş Biletleri',
+        'Paketler',
+        'Kontratlar',
+        'Haritalar',
+        'Oyuncu Sesleri',
+        'Silahlar',
+        'Crosshair',
+      ];
 
-const titles = [
-  'Haberler',
-  'Ajanlar',
-  'Savaş Biletleri',
-  'Paketler',
-  'Kontratlar',
-  'Haritalar',
-  'Oyuncu Sesleri',
-  'Silahlar',
-  'Crosshair',
-];
+      const newCards = [];
 
-const HomePage = ({ homepage }) => {
-  const cards = [];
+      for (const key in homepage) {
+        if (homepage.hasOwnProperty(key) && key !== '_id') {
+          const imageUrl = homepage[key];
+          const title = titles.shift();
+          newCards.push({ imageUrl, title });
+        }
+      }
 
-  for (const key in homepage) {
-    if (homepage.hasOwnProperty(key) && key !== '_id') {
-      const imageUrl = homepage[key];
-      const title = titles.shift();
-      cards.push({ imageUrl, title });
-    }
-  }
+      setCards(newCards);
+    })();
+  }, []);
 
   return (
-    <div className="App">
-      <div className="card-container">
-        {cards.map((card, index) => (
-          <div key={index} className="card">
-            <img src={card.imageUrl} alt={card.title} />
-            <h3>{card.title}</h3>
-          </div>
-        ))}
+    <>
+      <Head>
+        <title>Valorant Game</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="/styles.css" />
+      </Head>
+      <div className="main-container">
+        {/* ... */}
+        <div className="card-container">
+          {cards.map((card, index) => (
+            <div key={index} className="card">
+              <img src={card.imageUrl} alt={card.title} />
+              <h3>{card.title}</h3>
+            </div>
+          ))}
+        </div>
       </div>
-    </div>
+    </>
   );
-};
-
-export default HomePage;
+}
