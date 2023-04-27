@@ -85,14 +85,7 @@ export default function Home() {
       <Header />
       <div className="main-container">
         <Sidebar />
-        <div className="card-container">
-          {cards.map((card, index) => (
-            <div key={index} className="card">
-              <img src={card.imageUrl} alt={card.title} />
-              <h3>{card.title}</h3>
-            </div>
-          ))}
-        </div>
+
       </div>
     </>
   );
